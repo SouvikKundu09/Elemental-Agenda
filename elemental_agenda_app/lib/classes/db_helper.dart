@@ -18,7 +18,7 @@ class DatabaseHelper {
 
   Future<Database> initDatabase() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, 'ultimate.db');
+    final path = join(databasesPath, 'data_new.db');
 
     return await openDatabase(
       path,
@@ -31,7 +31,8 @@ class DatabaseHelper {
               description STRING NOT NULL,
               location STRING NOT NULL,
               start DATETIME NOT NULL,
-              end DATETIME NOT NULL
+              end DATETIME NOT NULL,
+              city STRING NOT NULL
             );
           ''');
       },
@@ -56,7 +57,7 @@ class DatabaseHelper {
 
   Future<List<Map<String, dynamic>>> fetchData(DateTime d) async {
     final db = await database;
-    final dst = DateTime.parse(DateFormat('y-M-d').format(d));
+    final dst = DateTime.parse(DateFormat('yyyy-MM-dd').format(d));
     final start = dst.millisecondsSinceEpoch;
     final end = dst.add(const Duration(days: 1)).millisecondsSinceEpoch;
     // print(start);
